@@ -55,3 +55,8 @@ jobs:
       # Even if you run
       # TODO: update the definition of Lambda?
       #   Maybe invoke?
+      # Nope, publish ... something like
+      # aws lambda update-function-code \
+      #  --function-name hello-world \
+      #  --image-uri 111122223333.dkr.ecr.us-east-1.amazonaws.com/hello-world:latest \
+      #  --publish
