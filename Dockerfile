@@ -18,8 +18,5 @@ RUN curl -sSL https://install.python-poetry.org | POETRY_HOME=${POETRY_HOME} POE
  && poetry env use system                     \
  && poetry install --without dev --no-root
 
-# Copy function code
-# COPY lambda_function.py ${LAMBDA_TASK_ROOT}
-
 # Set the CMD to your handler (could also be done as a parameter override outside of the Dockerfile)
 CMD [ "lambda_function.main.handler" ]
