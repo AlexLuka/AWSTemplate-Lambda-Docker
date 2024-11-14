@@ -18,7 +18,9 @@ def init_logger(source, level=logging.DEBUG):
     return logger_
 
 
-def main():
+def handler(input_data, lambda_context, *args, **kwargs):
+    logger = init_logger(__name__)
+
     n = 5
     t_ = time()
     for i in range(n):
@@ -28,6 +30,4 @@ def main():
 
 
 if __name__ == "__main__":
-    logger = init_logger(__name__)
-
-    main()
+    handler(None, None, None, None)
