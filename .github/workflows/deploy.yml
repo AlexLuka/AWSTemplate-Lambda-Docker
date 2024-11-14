@@ -1,0 +1,60 @@
+name: Deployment
+
+on:
+  push:
+    branches: [main]
+
+env:
+  AWS_REGION: us-east-1
+  ECR_REPO_NAME: templates/lambda-docker
+
+permissions:
+      id-token: write
+      contents: read
+
+jobs:
+  build:
+    name: "Build docker image"
+    runs-on: ubuntu-latest
+    steps:
+      - id: checkout
+        name: Checkout
+        uses: actions/checkout@v3
+
+      - id: temporary
+        name: Print some variables
+        run: |
+          echo ${GITHUB_SHA}
+          echo ${GITHUB_REF}
+
+      - id: aws-configure
+        name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.GHA_ASSUMED_ROLE }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - id: login-ecr
+        name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - id: build-and-push
+        name: push image to Amazon ECR
+        shell: bash
+        env:
+          IMAGE_NAME: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/${{ env.ECR_REPO_NAME }}
+          IMAGE_TAG1: ${{ github.sha }}
+          IMAGE_TAG2: latest
+        run: |
+          echo "Building the image with the main tag"
+          docker build -t "$IMAGE_NAME:$IMAGE_TAG1" -t "$IMAGE_NAME:$IMAGE_TAG2" --platform linux/amd64 --build-arg GITHUB_SHA_ARG=$GITHUB_SHA .
+          docker push "$IMAGE_NAME:$IMAGE_TAG1"
+          echo "Image $IMAGE_NAME is pushed to ECR"
+#          echo "Re tagging image to the latest"
+#          docker tag "$IMAGE_NAME:$IMAGE_TAG1" "$IMAGE_NAME:$IMAGE_TAG2"
+#          docker push "$IMAGE_NAME:$IMAGE_TAG2"
+#          echo "IMAGE $IMAGE_TAG2 is pushed to $IMAGE_NAME"
+
+      # Even if you run
+      # TODO: update the definition of Lambda?
+      #   Maybe invoke?
