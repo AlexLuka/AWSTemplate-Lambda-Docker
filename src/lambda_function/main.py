@@ -1,5 +1,6 @@
 import sys
 import logging
+import numpy as np
 
 from time import time, sleep
 
@@ -24,7 +25,7 @@ def handler(input_data, lambda_context, *args, **kwargs):
     n = 5
     t_ = time()
     for i in range(n):
-        logger.info(f"Iteration {i}")
+        logger.info(f"Iteration {i}: random number is {np.random.rand()}")
         sleep(1)
     logger.debug(f"Total execution time: {time() - t_:.10f} seconds")
 
