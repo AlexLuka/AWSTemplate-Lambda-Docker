@@ -6,6 +6,10 @@
 #   SES_EMAIL
 #   SES_VERIFIED_RECIPIENT
 
+# Run the script using the following command
+#       dotenv -e ../../../.env -- ./create-lambda-function.sh
+# which loads environment variables from .env file in the root of the repo and feed them to the current script.
+
 #
 #
 # First create IAM role and required polices
