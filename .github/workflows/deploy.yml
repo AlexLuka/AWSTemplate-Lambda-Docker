@@ -51,10 +51,6 @@ jobs:
           docker push "$IMAGE_NAME:$IMAGE_TAG1"
           docker push "$IMAGE_NAME:$IMAGE_TAG2"
           echo "Image $IMAGE_NAME is pushed to ECR"
-#          echo "Re tagging image to the latest"
-#          docker tag "$IMAGE_NAME:$IMAGE_TAG1" "$IMAGE_NAME:$IMAGE_TAG2"
-#          docker push "$IMAGE_NAME:$IMAGE_TAG2"
-#          echo "IMAGE $IMAGE_TAG2 is pushed to $IMAGE_NAME"
 
       # Even if you run
       # TODO: update the definition of Lambda?
