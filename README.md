@@ -74,3 +74,34 @@ To fix that, you need to add the following policy to the IAM role:
 where *** indicate the account number ID. Alternatively, you can set "Resource" to a wildcard, but that
  violates the principle of the least privilege.
 Therefore, it is recommended to indicate the resource explicitly.
+
+
+# Send email resource
+
+TODO
+I did these steps a while ago and already have everything in place.
+Need to refresh my memory about the steps that I did.
+To send email you need to create a specific resource - destination of your email.
+
+
+# Send email policy
+
+In addition to resource, you would need to allow lambda function to access SES, and send 
+emails to indicated resources. So, for that you need to add the following policy to your 
+lambda role:
+```json
+{
+    "Effect": "Allow",
+    "Action": [
+        "ses:SendEmail",
+        "ses:SendRawEmail"
+    ],
+    "Resource": [
+      "arn:aws:ses:us-east-1:***:identity/destination.email@domain.com",
+      "arn:aws:ses:us-east-1:***:identity/your.domain.identity",
+      "arn:aws:ses:us-east-1:***:configuration-set/domain-identity-configuration-set"
+    ]
+}
+```
+
+These are required for Lambda to send email from your _domain.identity_ to _destination.email_ .
