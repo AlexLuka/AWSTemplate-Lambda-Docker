@@ -155,3 +155,10 @@ the _attachments_ directory.
 In the local environment I had a library version 2.2.3 while in Docker it was set to 1.26.19 .
 I guess it was installed by default.
 Anyway, that cause some problems during runtime.
+
+```text
+RECOMMENDATION:
+Verify the versions of the libraries preinstalled to base docker image and add them by default 
+(to dev?) to a Poetry project file. That will guarantee that the dependencies are the same in 
+docker image and on the local machine.
+```
