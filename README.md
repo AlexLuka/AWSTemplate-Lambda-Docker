@@ -73,5 +73,4 @@ To fix that, you need to add the following policy to the IAM role:
 
 where *** indicate the account number ID. Alternatively, you can set "Resource" to a wildcard, but that
  violates the principle of the least privilege.
-Therefore, it is recommended to indicate the resource explicitly. 
-
+Therefore, it is recommended to indicate the resource explicitly.
