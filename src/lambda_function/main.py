@@ -35,18 +35,20 @@ def handler(input_data, lambda_context, *args, **kwargs):
     :param kwargs:
     :return:
     """
-    # logger = init_logger(__name__)
 
-    n = 1
-    t_ = time()
-    for i in range(n):
-        logger.info(f"Iteration {i}: random number is {np.random.rand()}")
-        sleep(1)
-    logger.debug(f"Total execution time: {time() - t_:.10f} seconds")
+    # n = 1
+    # t_ = time()
+    # for i in range(n):
+    #     logger.info(f"Iteration {i}: random number is {np.random.rand()}")
+    #     sleep(1)
+    # logger.debug(f"Total execution time: {time() - t_:.10f} seconds")
+
+    # Try to create a chart with Plotly and save it to html file
+
 
     logger.info("Going to send an email with attachments")
     send()
-    logger.info("Successfully send email with attachments")
+    # logger.info("Successfully send email with attachments")
 
 
 if __name__ == "__main__":
