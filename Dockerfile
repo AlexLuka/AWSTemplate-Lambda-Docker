@@ -12,6 +12,13 @@ COPY poetry.lock ${LAMBDA_TASK_ROOT}
 COPY pyproject.toml ${LAMBDA_TASK_ROOT}
 COPY src/lambda_function ${LAMBDA_TASK_ROOT}/lambda_function
 
+# This will copy all the files from the local 'attachments' directory to
+# ${LAMBDA_TASK_ROOT}/attachments
+COPY attachments/ ${LAMBDA_TASK_ROOT}/attachments
+
+# Just a sanity check step
+# RUN ls -la ${LAMBDA_TASK_ROOT}/attachments
+
 # Install the specified packages
 # The first command installs poetry to a docker OS system (not to a Python env)
 RUN curl -sSL https://install.python-poetry.org | POETRY_HOME=${POETRY_HOME} POETRY_VERSION=${POETRY_VERSION} python3 - \
@@ -21,7 +28,7 @@ RUN curl -sSL https://install.python-poetry.org | POETRY_HOME=${POETRY_HOME} POE
  # The first command tells that we do not want to create a new environment
  && poetry config virtualenvs.create false --local  \
  # Next we install all the prod dependencies to the system's environment
- && poetry install --without dev --no-root
+ && poetry install --without dev
 
 # Set the CMD to your handler (could also be done as a parameter override outside of the Dockerfile)
 CMD [ "lambda_function.main.handler" ]
