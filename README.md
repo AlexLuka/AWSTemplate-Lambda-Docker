@@ -44,4 +44,34 @@ the function.
 ```
 
 This means that if we simply push image to ECR with tag _latest_, the function will not catch 
-those changes and continue to use the old code.
+those changes and continue to use the old code. In order to update the function definition we
+must add the following step to the GHA workflow:
+
+```shell
+aws lambda update-function-code \
+    --function-name LambdaFunctionName \
+    --image-uri ***.dkr.ecr.us-east-1.amazonaws.com/lambda-function-image-repo \
+    --publish
+```
+
+There is a chance that when you run a workflow, you will get an error that the 
+role, that is used by GitHub to update AWS resources, doesn't have permissions to update the code
+on Lambda service.
+To fix that, you need to add the following policy to the IAM role:
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "lambda:UpdateFunctionCode",
+            "Resource": "arn:aws:lambda:us-east-1:***:function:LambdaFunctionName"
+        }
+    ]
+}
+```
+
+where *** indicate the account number ID. Alternatively, you can set "Resource" to a wildcard, but that
+ violates the principle of the least privilege.
+Therefore, it is recommended to indicate the resource explicitly. 
+
