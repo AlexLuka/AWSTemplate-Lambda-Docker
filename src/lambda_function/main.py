@@ -22,7 +22,7 @@ def init_logger(source, level=logging.DEBUG):
 def handler(input_data, lambda_context, *args, **kwargs):
     logger = init_logger(__name__)
 
-    n = 5
+    n = 10
     t_ = time()
     for i in range(n):
         logger.info(f"Iteration {i}: random number is {np.random.rand()}")
