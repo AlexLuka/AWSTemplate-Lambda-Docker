@@ -35,3 +35,13 @@ as secrets to the repo:
 # Create IAM role and lambda function
 
 # Update function on every push to main
+
+As per [documentation](https://docs.aws.amazon.com/cli/latest/reference/lambda/update-function-code.html):
+```text
+For a function defined as a container image, Lambda resolves the image tag to an image digest. 
+In Amazon ECR, if you update the image tag to a new image, Lambda does not automatically update 
+the function.
+```
+
+This means that if we simply push image to ECR with tag _latest_, the function will not catch 
+those changes and continue to use the old code.
