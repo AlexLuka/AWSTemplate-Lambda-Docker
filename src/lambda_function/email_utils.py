@@ -50,6 +50,7 @@ def send(attachments_dir: str = None):
     # repo and add the images to lambda code.
     attachment1_path = os.path.join(attachments_dir, "attachment1.jpg")
     attachment2_path = os.path.join(attachments_dir, "attachment2.jpg")
+    attachment3_path = os.path.join(attachments_dir, "plotly_chart3.html")
 
     # The subject line for the email.
     subject = "Amazon SES Test (SDK for Python)"
@@ -62,7 +63,7 @@ def send(attachments_dir: str = None):
     )
 
     # The HTML body of the email.
-    body_html = """<html>
+    body_html = f"""<html>
     <head></head>
     <body>
       <h1>Amazon SES Test (SDK for Python)</h1>
@@ -72,7 +73,13 @@ def send(attachments_dir: str = None):
         <img src="cid:attachment1" width="600">
         <img src="cid:attachment2" width="600">
         
-        <embed type="text/html" src="cid:graph.html"  width="500" height="200">
+        <embed type="text/html" src="cid:graph3"  width="500" height="200">
+        
+        Alternative attempt to add embedded HTML
+        
+        <embed type="text/html" src="{attachment3_path}"  width="500" height="200">
+        
+        <b>Will see which one works</b>
       </p>
     </body>
     </html>
@@ -125,6 +132,11 @@ def send(attachments_dir: str = None):
         image2_embedded = MIMEImage(fid.read())
         image2_embedded.add_header('Content-ID', 'attachment2')
         msg.attach(image2_embedded)
+
+    with open(attachment3_path, 'r') as fid:
+        graph3_embedded = MIMEText(fid.read(), 'html')
+        graph3_embedded.add_header('Content-ID', 'graph3')
+        msg.attach(graph3_embedded)
 
     # Try to send the email.
     try:
