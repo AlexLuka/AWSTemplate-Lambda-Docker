@@ -30,5 +30,7 @@ RUN curl -sSL https://install.python-poetry.org | POETRY_HOME=${POETRY_HOME} POE
  # Next we install all the prod dependencies to the system's environment
  && poetry install --without dev
 
+# RUN pip list
+
 # Set the CMD to your handler (could also be done as a parameter override outside of the Dockerfile)
 CMD [ "lambda_function.main.handler" ]

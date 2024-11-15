@@ -105,3 +105,12 @@ lambda role:
 ```
 
 These are required for Lambda to send email from your _domain.identity_ to _destination.email_ .
+
+
+# Frequent brakes
+
+## urllib3
+
+In the local environment I had a library version 2.2.3 while in Docker it was set to 1.26.19 .
+I guess it was installed by default.
+Anyway, that cause some problems during runtime.
