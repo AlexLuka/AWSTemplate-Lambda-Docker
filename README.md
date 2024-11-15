@@ -107,6 +107,47 @@ lambda role:
 These are required for Lambda to send email from your _domain.identity_ to _destination.email_ .
 
 
+# Add matplotlib chart to email
+
+If we want to generate some visualization on a fly we can do it with Plotly or Matplotlib.
+I have done some tests with plotly, but it breaks when I try to write graph to a buffer. 
+I need to debug it further.
+But! The same approach works with matplotlib.
+In simple words, you need to save the generated graph to a buffer like
+
+```python
+import io
+import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots()
+
+# Populate figure with data here
+
+# Save to a buffer
+buffer = io.BytesIO()
+plt.savefig(buffer, format='png')
+buffer.seek(0)
+```
+
+Later, this buffer can be added to the email message like
+```python
+graph_embedded = MIMEImage(buffer.getvalue(), subtype='png')
+graph_embedded.add_header('Content-ID', 'matplotlib-graph')
+msg.attach(graph_embedded)
+```
+
+And in the HTML part of the email's body add 
+```html
+<img src="cid:matplotlib-graph" width="600">
+```
+
+I need to work on the HTML part a little bit, but without any luxury the email content looks like this
+![](images/img2.png)
+
+You can see the generated chart on the right. On the left you can see one of the images from
+the _attachments_ directory.
+
+
 # Frequent brakes
 
 ## urllib3
