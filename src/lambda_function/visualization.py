@@ -21,4 +21,4 @@ def make_plot():
     )
 
     # Save chart as HTML to the attachments directory
-    fig.write_html(os.path.join(os.environ.get('$LAMBDA_TASK_ROOT'), 'attachments', "plotly_chart3.html"))
+    fig.write_html(os.path.join(os.environ.get('LAMBDA_TASK_ROOT'), 'attachments', "plotly_chart3.html"))
