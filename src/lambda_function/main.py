@@ -45,10 +45,10 @@ def handler(input_data, lambda_context, *args, **kwargs):
     # logger.debug(f"Total execution time: {time() - t_:.10f} seconds")
 
     # Try to create a chart with Plotly and save it to an HTML file
-    make_plot()
+    data_buffer = make_plot()
 
     logger.info("Going to send an email with attachments")
-    send()
+    send(data_buffer)
     # logger.info("Successfully send email with attachments")
 
 

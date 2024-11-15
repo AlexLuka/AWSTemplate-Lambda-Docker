@@ -1,4 +1,5 @@
-import os
+import io
+# import os
 import numpy as np
 import plotly.graph_objects as go
 
@@ -21,4 +22,14 @@ def make_plot():
     )
 
     # Save chart as HTML to the attachments directory
-    fig.write_html(os.path.join(os.environ.get('LAMBDA_TASK_ROOT'), 'attachments', "plotly_chart3.html"))
+    # fig.write_html(os.path.join(os.environ.get('LAMBDA_TASK_ROOT'), 'attachments', "plotly_chart3.html"))
+    buffer = io.BytesIO()
+    fig.write_image(buffer, format='png')
+    buffer.seek(0)
+    # fig.write_image(buffer, format="png")
+    return buffer
+
+
+if __name__ == "__main__":
+    buf = make_plot()
+    print(buf)
