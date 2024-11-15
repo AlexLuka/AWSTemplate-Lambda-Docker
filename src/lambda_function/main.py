@@ -20,6 +20,15 @@ def init_logger(source, level=logging.DEBUG):
 
 
 def handler(input_data, lambda_context, *args, **kwargs):
+    """
+        Note, this name is used in a CMD command in Dockerfile.
+
+    :param input_data:
+    :param lambda_context:
+    :param args:
+    :param kwargs:
+    :return:
+    """
     logger = init_logger(__name__)
 
     n = 10
