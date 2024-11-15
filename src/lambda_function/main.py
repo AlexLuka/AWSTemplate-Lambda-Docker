@@ -4,6 +4,9 @@ import numpy as np
 
 from time import time, sleep
 
+# Local imports:
+from lambda_function.email_utils import send
+
 
 def init_logger(source, level=logging.DEBUG):
     logger_ = logging.getLogger(source)
@@ -31,12 +34,16 @@ def handler(input_data, lambda_context, *args, **kwargs):
     """
     logger = init_logger(__name__)
 
-    n = 10
+    n = 1
     t_ = time()
     for i in range(n):
         logger.info(f"Iteration {i}: random number is {np.random.rand()}")
         sleep(1)
     logger.debug(f"Total execution time: {time() - t_:.10f} seconds")
+
+    logger.info("Going to send an email with attachments")
+    send()
+    logger.info("Successfully send email with attachments")
 
 
 if __name__ == "__main__":
