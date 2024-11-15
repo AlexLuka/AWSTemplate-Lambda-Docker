@@ -22,6 +22,9 @@ def init_logger(source, level=logging.DEBUG):
     return logger_
 
 
+logger = init_logger("lambda_function")
+
+
 def handler(input_data, lambda_context, *args, **kwargs):
     """
         Note, this name is used in a CMD command in Dockerfile.
@@ -32,7 +35,7 @@ def handler(input_data, lambda_context, *args, **kwargs):
     :param kwargs:
     :return:
     """
-    logger = init_logger(__name__)
+    # logger = init_logger(__name__)
 
     n = 1
     t_ = time()
