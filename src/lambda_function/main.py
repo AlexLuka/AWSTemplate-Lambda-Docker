@@ -7,7 +7,7 @@ import logging
 
 # Local imports:
 from lambda_function.email_utils import send
-from lambda_function.visualization import make_plot
+from lambda_function.visualization import make_plot_mpl
 
 
 def init_logger(source, level=logging.DEBUG):
@@ -48,7 +48,7 @@ def handler(input_data, lambda_context, *args, **kwargs):
                 f"https://github.com/AlexLuka/AWSTemplate-Lambda-Docker/tree/{os.environ.get('GITHUB_SHA')}")
 
     # Try to create a chart with Plotly and save it to an HTML file
-    data_buffer = make_plot()
+    data_buffer = make_plot_mpl()
 
     logger.info("Going to send an email with attachments")
     send(data_buffer)
