@@ -7,6 +7,7 @@ on:
 env:
   AWS_REGION: us-east-1
   ECR_REPO_NAME: templates/lambda-docker
+  LAMBDA_FUNCTION_NAME: SendEmail-DockerImageTemplate
 
 permissions:
       id-token: write
@@ -52,11 +53,14 @@ jobs:
           docker push "$IMAGE_NAME:$IMAGE_TAG2"
           echo "Image $IMAGE_NAME is pushed to ECR"
 
-      # Even if you run
-      # TODO: update the definition of Lambda?
-      #   Maybe invoke?
-      # Nope, publish ... something like
-      # aws lambda update-function-code \
-      #  --function-name hello-world \
-      #  --image-uri 111122223333.dkr.ecr.us-east-1.amazonaws.com/hello-world:latest \
-      #  --publish
+      # Update the Lambda function definition
+      - id: update-lambda
+        name: Update lambda code
+        shell: bash
+        env:
+          IMAGE_NAME: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/${{ env.ECR_REPO_NAME }}:latest
+        run: |
+          aws lambda update-function-code \
+            --function-name ${{ env.LAMBDA_FUNCTION_NAME }} \
+            --image-uri ${IMAGE_NAME} \
+            --publish
