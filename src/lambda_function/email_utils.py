@@ -49,6 +49,7 @@ def send(attachments_dir: str = None):
     # So, I have created a separate dir 'images' at the root of the
     # repo and add the images to lambda code.
     attachment1_path = os.path.join(attachments_dir, "attachment1.jpg")
+    attachment2_path = os.path.join(attachments_dir, "attachment2.jpg")
 
     # The subject line for the email.
     subject = "Amazon SES Test (SDK for Python)"
@@ -68,8 +69,10 @@ def send(attachments_dir: str = None):
       <p>This email was sent with
         <a href='https://aws.amazon.com/ses/'>Amazon SES</a> using the
         <a href='https://aws.amazon.com/sdk-for-python/'>AWS SDK for Python (Boto)</a>.
-        <img src="cid:attachment1">
-        <img src="cid:attachment2">
+        <img src="cid:attachment1" width="600">
+        <img src="cid:attachment2" width="600">
+        
+        <embed type="text/html" src="cid:graph.html"  width="500" height="200">
       </p>
     </body>
     </html>
@@ -103,27 +106,25 @@ def send(attachments_dir: str = None):
     msg.attach(msg_body)
 
     #
-    # Attachments:
-    #   There are two types of attachments - embedded and in mail.
+    # There are two types of attachments - embedded and attached.
     #
     # Define the attachment part and encode it using MIMEApplication.
     with open(attachment1_path, 'rb') as fid:
-        att = MIMEApplication(fid.read())
+        image1_attachment = MIMEApplication(fid.read())
 
         # Add a header to tell the email client to treat this part as an attachment,
         # and to give the attachment a name.
-        att.add_header(
+        image1_attachment.add_header(
             'Content-Disposition',
             'attachment1',
             filename=os.path.basename(attachment1_path))
+        # Add the attachment to the parent container.
+        msg.attach(image1_attachment)
 
-    with open(attachment1_path, 'rb') as fid:
-        msg_image = MIMEImage(fid.read())
-        msg_image.add_header('Content-ID', '<attachment2>')
-        msg.attach(msg_image)
-
-    # Add the attachment to the parent container.
-    msg.attach(att)
+    with open(attachment2_path, 'rb') as fid:
+        image2_embedded = MIMEImage(fid.read())
+        image2_embedded.add_header('Content-ID', 'attachment2')
+        msg.attach(image2_embedded)
 
     # Try to send the email.
     try:
