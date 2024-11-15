@@ -1,11 +1,12 @@
 import sys
 import logging
-import numpy as np
-
-from time import time, sleep
+# import numpy as np
+#
+# from time import time, sleep
 
 # Local imports:
 from lambda_function.email_utils import send
+from lambda_function.visualization import make_plot
 
 
 def init_logger(source, level=logging.DEBUG):
@@ -43,8 +44,8 @@ def handler(input_data, lambda_context, *args, **kwargs):
     #     sleep(1)
     # logger.debug(f"Total execution time: {time() - t_:.10f} seconds")
 
-    # Try to create a chart with Plotly and save it to html file
-
+    # Try to create a chart with Plotly and save it to an HTML file
+    make_plot()
 
     logger.info("Going to send an email with attachments")
     send()
