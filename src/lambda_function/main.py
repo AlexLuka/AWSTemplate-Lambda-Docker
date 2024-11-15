@@ -1,3 +1,4 @@
+import os
 import sys
 import logging
 # import numpy as np
@@ -43,6 +44,8 @@ def handler(input_data, lambda_context, *args, **kwargs):
     #     logger.info(f"Iteration {i}: random number is {np.random.rand()}")
     #     sleep(1)
     # logger.debug(f"Total execution time: {time() - t_:.10f} seconds")
+    logger.info(f"Code version: "
+                f"https://github.com/AlexLuka/AWSTemplate-Lambda-Docker/tree/{os.environ.get('GITHUB_SHA')}")
 
     # Try to create a chart with Plotly and save it to an HTML file
     data_buffer = make_plot()
