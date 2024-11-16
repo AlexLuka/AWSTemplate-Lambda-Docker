@@ -148,7 +148,7 @@ You can see the generated chart on the right. On the left you can see one of the
 the _attachments_ directory.
 
 
-# Frequent brakes
+# Potential problems
 
 ## urllib3
 
