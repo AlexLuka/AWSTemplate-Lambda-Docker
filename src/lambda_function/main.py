@@ -6,6 +6,9 @@ import logging
 # from time import time, sleep
 
 # Local imports:
+#   If these imports do not work in your local IDE then you just need to add
+#   'src' directory to PYTHONPATH. In PyCharm you can do that by marking 'src'
+#   directory a Source Root.
 from lambda_function.email_utils import send
 from lambda_function.visualization import make_plot_mpl
 
